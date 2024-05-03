@@ -107,6 +107,33 @@ const ProductPage = ({ location }) => {
     slidesToScroll: 1
   };
 
+  // Additional filter options for vehicles
+  const vehicleFilterOptions = (
+    <>
+    <select
+      className="border border-gray-300 rounded-md p-2 mr-2"
+      value={selectedFeatures.seatingCapacity || ""}
+      onChange={(e) => setSelectedFeatures({ ...selectedFeatures, seatingCapacity: e.target.value })}
+    >
+      <option value="">Seating Capacity</option>
+      {/* Add seating capacity options */}
+    </select>
+    <select
+      className="border border-gray-300 rounded-md p-2 mr-2"
+      value={selectedFeatures.fuelType || ""}
+      onChange={(e) => setSelectedFeatures({ ...selectedFeatures, fuelType: e.target.value })}
+    >
+      <option value="">Fuel Type</option>
+      {/* Map over options for fuelType from allFeatureOptions */}
+      {selectedFeatures.fuelType && selectedFeatures.fuelType.map((option, index) => (
+        <option key={index} value={option}>{option}</option>
+      ))}
+    </select>
+    {/* Add more filter options for vehicles */}
+  </>
+  
+  );
+
   return (
     <div className="container mx-auto px-4 py-8">
       <Navbar />
@@ -142,9 +169,9 @@ const ProductPage = ({ location }) => {
               <option key={index} value={city}>{city}</option>
             ))}
           </select>
-          {/* Add additional filter options based on the selected category */}
+          {selectedCategory === 'vehicles' && vehicleFilterOptions}
         </div>
-        <button className="bg-blue-500 text-white px-4 py-2 rounded-md">Apply Filters</button>
+        
       </div>
       <div>
         {filteredProducts.length === 0 ? (
